@@ -1,12 +1,14 @@
 import dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 
-import { log } from "./log";
+import router from "./router";
 
 dotenv.config();
 
-log("Name!!!");
-
 const app = express();
-console.log(app);
-console.log(process.env.PORT);
+
+app.use(cors());
+app.use(router);
+
+app.listen(process.env.PORT);

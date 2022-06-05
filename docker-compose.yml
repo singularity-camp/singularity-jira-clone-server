@@ -1,0 +1,54 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+
+  graphql-engine:
+    container_name: $HASURA_CONTAINER
+    image: hasura/graphql-engine:v2.7.0
+    ports:
+      - $HASURA_GRAPHQL_SERVER_PORT:$HASURA_GRAPHQL_SERVER_PORT
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      - HASURA_GRAPHQL_SERVER_PORT=$HASURA_GRAPHQL_SERVER_PORT
+      ## postgres database to store Hasura metadata
+      - HASURA_GRAPHQL_METADATA_DATABASE_URL=postgres://postgres:postgrespassword@postgres:5432/postgres
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      - PG_DATABASE_URL=postgres://postgres:postgrespassword@postgres:5432/postgres
+      ## enable the console served by server
+      - HASURA_GRAPHQL_ENABLE_CONSOLE=false # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      - HASURA_GRAPHQL_DEV_MODE=true
+      - HASURA_GRAPHQL_ENABLED_LOG_TYPES=startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      - HASURA_GRAPHQL_ADMIN_SECRET=$HASURA_GRAPHQL_ADMIN_SECRET
+
+  api:
+    container_name: api
+    build:
+      dockerfile: dev.Dockerfile
+    depends_on:
+      - $HASURA_CONTAINER
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - HASURA_GRAPHQL_ENDPOINT=http://$HASURA_CONTAINER:$HASURA_GRAPHQL_SERVER_PORT # machine-to-machine
+      - HASURA_GRAPHQL_ADMIN_SECRET=$HASURA_GRAPHQL_ADMIN_SECRET # auth as admin access
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:secret@postgres:5432/postgres # for seeding
+      - HASURA_GRAPHQL_ENABLE_TELEMETRY=false
+      - HASURA_GRAPHQL_CLI_ENVIRONMENT=server-on-docker
+    ports:
+      - $PORT:$PORT
+    volumes:
+      - ./:/app:cached
+volumes:
+  db_data:
+
