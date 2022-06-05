@@ -12,7 +12,7 @@
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
     "hasura": "hasura --skip-update-check",
-    "hasura:console": "yarn hasura console"
+    "hasura:console": "hasura console --envfile .env"
   },
   "dependencies": {
     "cors": "^2.8.5",
