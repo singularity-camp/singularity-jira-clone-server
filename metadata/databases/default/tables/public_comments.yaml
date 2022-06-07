@@ -1,38 +1,34 @@
 table:
   schema: public
-  name: cards
-array_relationships:
-  - name: comments
+  name: comments
+object_relationships:
+  - name: card
     using:
-      foreign_key_constraint_on:
-        column: card_id
-        table:
-          schema: public
-          name: comments
+      foreign_key_constraint_on: card_id
 insert_permissions:
   - role: guest
     permission:
       check: {}
       columns:
-        - description
+        - content
+        - card_id
         - id
-        - title
       backend_only: false
 select_permissions:
   - role: guest
     permission:
       columns:
-        - description
+        - content
+        - card_id
         - id
-        - title
       filter: {}
       allow_aggregations: true
 update_permissions:
   - role: guest
     permission:
       columns:
-        - description
-        - title
+        - content
+        - card_id
         - id
       filter: {}
       check: {}
