@@ -12,8 +12,8 @@
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
     "hasura": "hasura --skip-update-check",
-    "hasura:console": "yarn hasura console --envfile .env",
-    "reset": "yarn hasura metadata clear && yarn hasura migrate delete --server --all --force --database-name default && yarn hasura migrate apply --database-name default && yarn hasura seed apply && yarn hasura metadata apply"
+    "hasura:console": "npm run hasura console --envfile .env",
+    "reset": "npm run hasura metadata clear && npm run hasura migrate delete --server --all --force --database-name default && npm run hasura migrate apply --database-name default && npm run hasura seed apply && npm run hasura metadata apply"
   },
   "dependencies": {
     "cors": "^2.8.5",
