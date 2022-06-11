@@ -5,7 +5,7 @@ WORKDIR /app
 ENV APP_VERSION=dev
 ENV NODE_ENV=development
 
-ADD ./package.json ./yarn.lock ./
-RUN npm install
+COPY package*.json ./
+RUN npm install && npm cache clean --force
 
 CMD ["npm", "run", "dev"]

@@ -12,10 +12,17 @@
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
     "hasura": "hasura --skip-update-check",
-    "hasura:console": "npm run hasura console --envfile .env",
-    "reset": "npm run hasura metadata clear && npm run hasura migrate delete --server --all --force --database-name default && npm run hasura migrate apply --database-name default && npm run hasura seed apply && npm run hasura metadata apply"
+    "hasura:console": "npm run hasura -- console --envfile .env",
+    "db:reset": "ts-node ./src/reset.ts",
+    "hasura:metadata:clear": "npm run hasura -- metadata clear",
+    "hasura:metadata:apply": "npm run hasura -- metadata apply",
+    "hasura:migrate:delete": "npm run hasura -- migrate delete --all --server --force --database-name default",
+    "hasura:migrate:apply": "npm run hasura -- migrate apply --database-name default",
+    "hasura:seed:apply": "npm run hasura -- seed apply --database-name default",
+    "hasura:reset": "npm run db:reset && npm run hasura:metadata:clear && npm run hasura:migrate:delete && npm run hasura:migrate:apply && npm run hasura:metadata:apply && npm run hasura:seed:apply"
   },
   "dependencies": {
+    "@prisma/client": "^3.15.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "http-proxy-middleware": "^2.0.6"
@@ -29,6 +36,7 @@
     "hasura-cli": "^2.7.0",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
+    "prisma": "^3.15.1",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
   }

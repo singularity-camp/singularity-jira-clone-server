@@ -9,34 +9,3 @@ array_relationships:
         table:
           schema: public
           name: comments
-insert_permissions:
-  - role: guest
-    permission:
-      check: {}
-      columns:
-        - description
-        - id
-        - title
-      backend_only: false
-select_permissions:
-  - role: guest
-    permission:
-      columns:
-        - description
-        - id
-        - title
-      filter: {}
-      allow_aggregations: true
-update_permissions:
-  - role: guest
-    permission:
-      columns:
-        - description
-        - title
-        - id
-      filter: {}
-      check: {}
-delete_permissions:
-  - role: guest
-    permission:
-      filter: {}
