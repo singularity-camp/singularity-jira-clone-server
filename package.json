@@ -13,7 +13,7 @@
     "dev": "nodemon ./src/index.ts",
     "hasura": "hasura --skip-update-check",
     "hasura:console": "npm run hasura -- console --envfile .env",
-    "db:reset": "ts-node ./src/reset.ts",
+    "db:reset": "ts-node -r dotenv/config ./src/reset.ts",
     "hasura:metadata:clear": "npm run hasura -- metadata clear",
     "hasura:metadata:apply": "npm run hasura -- metadata apply",
     "hasura:migrate:delete": "npm run hasura -- migrate delete --all --server --force --database-name default",
