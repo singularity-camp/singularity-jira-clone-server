@@ -8,16 +8,6 @@ Sample Jira clone
 
 For development, you will only need Node.js and a node global package, Yarn, installed in your environement.
 
-### Yarn installation
-
-After installing node, this project will need yarn too, so just run the following command.
-
-    $ npm install -g yarn
-
-## Install
-
-    $ yarn
-
 ## Env file
 
     $ touch .env

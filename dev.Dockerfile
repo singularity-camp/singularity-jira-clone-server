@@ -6,6 +6,6 @@ ENV APP_VERSION=dev
 ENV NODE_ENV=development
 
 ADD ./package.json ./yarn.lock ./
-RUN yarn
+RUN npm install
 
-CMD ["yarn", "dev"]
+CMD ["npm", "run", "dev"]
